@@ -1,39 +1,77 @@
 "use client";
-import Link from "@chakra-ui/next-js";
-import { usePathname } from "next/navigation";
-import React from "react";
-import { SiAutodeskrevit } from "react-icons/si";
-import classnames from "classnames";
+import {
+  Avatar,
+  Box,
+  Button,
+  ButtonGroup,
+  Container,
+  HStack,
+  Icon,
+  IconButton,
+  Input,
+  InputGroup,
+  InputLeftElement,
+} from "@chakra-ui/react";
+import { FiBell, FiSearch } from "react-icons/fi";
+import { MobileDrawer } from "./components/MobileDrawer";
+import { Logo } from "./components/Logo";
+import { DocumentPopover } from "./components/DocumentPopover";
 
-const NavBar = () => {
-  const currentPath = usePathname();
-  console.log("currentpath", currentPath);
-  const links = [
-    { label: "Dashboard", href: "/" },
-    { label: "Issues", href: "/issues" },
-  ];
-  return (
-    <nav className="flex space-x-6 border-b mb-5 px-5 h-14 items-center">
-      <Link href="/">
-        <SiAutodeskrevit size={40} />
-      </Link>
-      <ul className="flex space-x-6">
-        {links.map((link) => (
-          <Link
-            key={link.href}
-            href={link.href}
-            className={classnames({
-              "blue.400": link.href === currentPath,
-              "text-zinc-500": link.href !== currentPath,
-              "hover:text-zinc-800 transition-colors": true,
-            })}
-          >
-            {link.label}
-          </Link>
-        ))}
-      </ul>
-    </nav>
-  );
-};
-
-export default NavBar;
+export const NavBar = () => (
+  <Box as="section" minH="lg">
+    <Box
+      borderBottomWidth="1px"
+      bg="bg.accent.default"
+      position="relative"
+      zIndex="tooltip"
+    >
+      <Container py="4">
+        <HStack justify="space-between" spacing="8">
+          <HStack spacing="10">
+            <HStack spacing="3">
+              <MobileDrawer />
+              <Logo />
+            </HStack>
+            <ButtonGroup
+              size="lg"
+              variant="text.accent"
+              colorScheme="gray"
+              spacing="8"
+              display={{ base: "none", lg: "flex" }}
+            >
+              <Button onClick={() => (location.href = "/")}>Dashboard</Button>
+              <Button>Analysis</Button>
+              <DocumentPopover />
+              <Button>History</Button>
+            </ButtonGroup>
+          </HStack>
+          <HStack spacing={{ base: "2", md: "4" }}>
+            <InputGroup
+              maxW="2xs"
+              display={{ base: "none", md: "inline-flex" }}
+            >
+              <InputLeftElement>
+                <Icon as={FiSearch} color="fg.accent.muted" fontSize="lg" />
+              </InputLeftElement>
+              <Input placeholder="Search" variant="filled.accent" />
+            </InputGroup>
+            <ButtonGroup variant="tertiary.accent" spacing="1">
+              <IconButton
+                icon={<FiSearch />}
+                aria-label="Serach"
+                display={{ base: "flex", lg: "none" }}
+                isRound
+              />
+              <IconButton
+                icon={<FiBell />}
+                aria-label="Show notification"
+                isRound
+              />
+            </ButtonGroup>
+            <Avatar boxSize="10" src="https://i.pravatar.cc/300" />
+          </HStack>
+        </HStack>
+      </Container>
+    </Box>
+  </Box>
+);

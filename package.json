@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "gen:theme-typings": "chakra-cli tokens src/app/theme.tsx",
+    "postinstall": "npm run gen:theme-typings "
   },
   "dependencies": {
     "@chakra-ui/next-js": "^2.2.0",
@@ -14,6 +16,9 @@
     "@chakra-ui/react": "^2.8.2",
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
+    "@fontsource-variable/inter": "^5.0.18",
+    "@fontsource-variable/open-sans": "^5.0.29",
+    "@fontsource-variable/spline-sans": "^5.0.20",
     "classnames": "^2.5.1",
     "framer-motion": "^11.2.12",
     "next": "14.2.4",
@@ -22,6 +27,7 @@
     "react-icons": "^5.2.1"
   },
   "devDependencies": {
+    "@chakra-ui/cli": "^2.4.1",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
