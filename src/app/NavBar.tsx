@@ -1,5 +1,5 @@
 "use client";
-import Link from "next/link";
+import Link from "@chakra-ui/next-js";
 import { usePathname } from "next/navigation";
 import React from "react";
 import { SiAutodeskrevit } from "react-icons/si";
@@ -23,7 +23,7 @@ const NavBar = () => {
             key={link.href}
             href={link.href}
             className={classnames({
-              "text-zinc-50": link.href === currentPath,
+              "blue.400": link.href === currentPath,
               "text-zinc-500": link.href !== currentPath,
               "hover:text-zinc-800 transition-colors": true,
             })}
