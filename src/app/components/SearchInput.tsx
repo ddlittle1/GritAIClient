@@ -15,7 +15,7 @@ const SearchInput = ({ onSearch }: Props) => {
       }}
     >
       <InputGroup>
-        <InputLeftElement children={<BsSearch />} />
+        <InputLeftElement> {<BsSearch />} </InputLeftElement>
         <Input
           borderRadius={20}
           placeholder="Search..."
