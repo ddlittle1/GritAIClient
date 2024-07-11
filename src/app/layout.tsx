@@ -13,7 +13,9 @@ export const metadata: Metadata = {
   title: "Grit AI Client",
   description: "Grit AI",
 };
-
+interface Props {
+  onSearch: (searchText: string) => void;
+}
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -22,10 +24,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={fonts.rubik.variable}>
-        <Providers>
-          <NavBar />
-          {children}
-        </Providers>
+        <Providers>{children}</Providers>
       </body>
     </html>
   );
