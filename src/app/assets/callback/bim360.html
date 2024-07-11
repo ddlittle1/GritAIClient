@@ -1,0 +1,17 @@
+Headed back to Grit...
+<script>
+    const code = getUrlParameter('code');
+    const state = getUrlParameter('state');
+    if (state === localStorage.getItem('csrfToken') && localStorage.getItem('accountId')) {
+        window.location.href = '/accounts/' + localStorage.getItem('accountId') + '/integrations?integration=bim360&code=' + code;
+    } else {
+        document.writeln("Invalid state");
+    }
+
+    function getUrlParameter(name) {
+        name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+        var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+        var results = regex.exec(location.search);
+        return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+    };
+</script>

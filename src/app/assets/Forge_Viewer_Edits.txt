@@ -1,0 +1,191 @@
+Forge Viewer Edits: Started For LMV v6.3.3 - 2018
+
+Update Log:
+11-29-18 From LMV v4.0.1 -> LMV v6.3.3 (69234 lines -> 155244 lines)
+
+(Format)
+++++++++++
+*File
+=====
+Line -> Change
+Description/Why
+=====
+++++++++++
+(END Format)
+
+
+Forge Viewer
+++++++++++
+*assets/script/viewer3D.js
+
+=====
+29601 -> Added 1st line and changed second line .error to a .warn
+```accessToken = "9AMaRKBoPCIBy61JmQ8OLLLyRblS";
+_logger_Logger__WEBPACK_IMPORTED_MODULE_1__["logger"].warn("No access token is provided, but authorization requested. This is a problem.");```
+
+Without this, the viewer would not load because it would try to refresh with the access token being empty. Found this accessToken string by looking at the previous viewer code.
+So copy and paste and it happens to work.
+=====
+
+=====
+43084 - 43086 -> Commented code
+```// if (theApi === endp.ENDPOINT_API_MODEL_DERIVATIVE_V2) {
+//   derivativeUrn = encodeURIComponent(decodedUrn);
+// }```
+
+This was causing the return path for ```const svfUrl = doc.getViewablePath(initialViewable);``` to not be in the correct format for the viewer.start(svfUrl,...) and viewer.load(svfUrl,...)
+Figured this out by looking at the svfUrl format from the previous viewer. Without change it would not load.
+=====
+
+=====
+29099 - 291000 -> Added code
+```enumerable: false,
+configurable: true,```
+
+Not sure what this was added for. It was in the previous viewer. I believe it was something for the mobile application. Perhaps Larry Pham added this. 
+(Whoever did this, record your reason here please.)
+=====
+
+=====
+77554 - 77561 -> Commented code
+```// Kept since 3rd party code and for when we update the viewer to know to remove this
+// var rightMouse = cam.navApi.getUseLeftHandedInput() ? 1 : 3;
+// if (coords.which === rightMouse) {
+//   cam.viewCubeMenuOpen = true;
+//   cam.drawDropdownMenu(menuOptionList, menuEnableList, menuStateCallbackList, coords.clientX, coords.clientY, cubeContainer, position);
+//   endMouseUp(true);
+//   return;
+// }```
+
+Design Choice. This was to keep the context menu on the viewer cube from coming up. It was to keep users from using some of the functions that menu would show.
+=====
+
+=====
+76692 -> Modified code
+```this.wantContextMenu = false;```
+
+Design Choice. Changed from true to false. This keeps the arrow near the viewcube from appearing to limit menu options. (Same idea as above)
+=====
+
+=====
+72263 -> Commented code
+```// this.updateNodeVisibilityTracking(node, visible);```
+This tracking function is to update hidden and isolated nodes for call to the viewer. Since we do our own tracking of nodes we do not need this.
+This was causing the hiding of objects to take a very long time, and things would feel unresponsive. It was doing a couple finds and splices which is expensive for large arrays.
+=====
+
+**Previous changes not made in this file in this forge viewer update
+=====
+47805 (previous viewer line #) -> Modified code
+```function getViewableCount(modelDocument) {
+	var viewableItems = Document.getViewableItems(modelDocument);
+	let count = 0;
+	viewableItems.forEach(function(root) {
+		var geometryItems = Document.getSubItemsWithProperties(root, {'type':'geometry'}, true);
+		count += geometryItems.length;
+	});
+	return count;
+}```
+
+Unsure what this was for. I believe it had something to do with loading. Perhaps this is deprecated in this viewer file. Perhaps Trenton Albrecht added this.
+=====
+
+=====
+48322 (previous viewer line #) -> Modified code
+```Document.getViewableItems = function(document) {
+    return Document.getSubItemsWithProperties(document.getRootItem(), {'outputType': 'svf'}, true);
+    // return (
+    //     Document.getSubItemsWithProperties(document.getRootItem(), {'type':'folder','role':'viewable'}, true).concat(
+    //     Document.getSubItemsWithProperties(document.getRootItem(), {'outputType': 'svf'}, true)));
+};```
+
+(Same as above) Unsure what this was for. I believe it had something to do with loading. Perhaps this is deprecated in this viewer file. Perhaps Trenton Albrecht added this.
+=====
+++++++++++
+
+
+BimWalk Extension (previously FirstPerson extension)
+++++++++++
+*assets/script/extensions/BimWalk/BimWalk.js
+
+=====
+2824 -> Modified code
+```this.div.appendChild(tmp.childNodes[1]); // Assumes template has only 1 root node.```
+
+Made it look at index 1 instead of index 0. Unsure as to why index 0 was not the imported HTML_TEMPLATE. Index 0 was empty to all of the querySelectors were null.
+This made the guide function which shows up when you enter BimWalk mode.
+=====
+
+=====
+1720 -> Commented code
+1729 -> Commented code
+1100 -> Added code
+```// this.viewer.impl.pauseHighlight(true);```
+```// this.viewer.impl.pauseHighlight(false);```
+```this.viewer.impl.rolloverObject(currMousePosition.x, currMousePosition.y);```
+
+Design Choice. This keeps the object rollover highlighting in the viewer from running, but we want it to.
+The added code makes the rolloverObject highlighting actually work.
+
+=====
+
+=====
+1762 -> Added code
+```this.navapi.toOrthographic();```
+
+Design Choice. The toOrthographic obviously makes the viewer go back into orthographic when you exit BimWalk mode.
+=====
+
+=====
+1101 -> Added code
+```if (!this.turningWithMouse) return false;```
+
+This function was always returning true before this was added, which was causing the forge viewer to receive the message that the mouse event had been handled.
+In turn, this causes the forge viewer to stopPropagation of the mouse event, so the dragging up of the split pane would not work unless we returned false.
+See viewer3D.js 70630 ```this.__invokeStack = function (method, arg1, arg2)``` and 70821 ```this.handleMouseMove = function (event)```
+=====
+
+=====
+364, etc. -> Added functionality
+```this.lockGravity = false;```
+
+Added lockGravity variable and related functionality to toggle gravity effects if spacebar is pressed.
+Before, there was an error when you hit spacebar and it looked like they were trying to accomplish the same type of thing.
+=====
+
+*assets/script/extensions/BimWalk/BimWalk.css
+
+=====
+106 -> Modified property
+```left: 12px;```
+
+Made info tooltip show up in left corner instead of right.
+=====
+
+*assets/script/extensions/BimWalk/res/guide.html
+
+=====
+387 -> Modified html
+391 -> Modified html
+```<span id="tooltipOk" class="grit-btn red-btn c-bimwalk-tooltip__action" data-i18n="Ok Got It">```
+```<span id="dontRemind" class="grit-btn active c-bimwalk-tooltip__action" data-i18n="Dont remind me again">```
+
+Made button use our styles.css button class and removed their button class.
+=====
+
+*assets/script/extensions/Measure/Measure.js
+
+=====
+8 -> Added code
+```avp = Autodesk.Viewing.Private,```
+
+Extension had missing variable declaration when updated code was pulled over. Would error out if missing.
+=====
+
+++++++++++
+
+
+
+
+
+
