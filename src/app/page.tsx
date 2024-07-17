@@ -3,6 +3,7 @@ import { Link } from "@chakra-ui/next-js";
 import { Grid, GridItem, Show, Text } from "@chakra-ui/react";
 import NavBar from "./components/NavBar";
 import ComponentList from "./components/ComponentList";
+import DoorTable from "./components/DoorTable";
 
 interface Props {
   onSearch: (searchText: string) => void;
@@ -29,7 +30,7 @@ export default function Page() {
           </GridItem>
         </Show>
         <GridItem area="main">
-          <Text color="red">Main</Text>
+          <DoorTable />
         </GridItem>
       </Grid>
       <Link href="/about" color="blue.400" _hover={{ color: "blue.500" }}>
