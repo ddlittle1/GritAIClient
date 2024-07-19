@@ -13,12 +13,9 @@ const NavBar = ({ onSearch }: Props) => {
   const { colorMode } = useColorMode();
   return (
     <HStack padding="10px">
-      <Box color="blue" boxSize="60px">
+      <Box boxSize="60px">
         <Link href="/">
-          <Logo2
-            color={colorMode === "dark" ? "white" : "red"}
-            boxSize="65px"
-          />
+          <Logo2 boxSize="65px" />
         </Link>
       </Box>
       <SearchInput onSearch={onSearch} />
