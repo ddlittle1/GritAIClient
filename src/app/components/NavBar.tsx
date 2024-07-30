@@ -18,7 +18,7 @@ const NavBar = ({ onSearch }: Props) => {
           <Logo2 boxSize="65px" />
         </Link>
       </Box>
-      <SearchInput paddingLeft={5} onSearch={onSearch} />
+      <SearchInput onSearch={onSearch} />
       <ColorModeSwitch />
     </HStack>
   );
