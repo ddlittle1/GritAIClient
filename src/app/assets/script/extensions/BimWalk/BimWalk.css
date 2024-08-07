@@ -11,7 +11,7 @@
 }
 
 .adsk-viewing-viewer .mobile-joystick-handle.focus {
-  background: rgba(255,255,255,1);
+  background: rgba(255, 255, 255, 1);
 }
 
 .adsk-viewing-viewer .mobile-joystick-handle.transition {
@@ -22,7 +22,7 @@
   border-radius: 100%;
   display: inherit;
   position: fixed;
-  background: rgba(255, 255, 255, 0.80);
+  background: rgba(255, 255, 255, 0.8);
   box-shadow: -3px 3px 6px 0px rgba(0, 0, 0, 0.15);
 }
 
@@ -95,7 +95,7 @@
 }
 
 .adsk-viewing-viewer .bimwalk .speed.open {
-  opacity: 1.0;
+  opacity: 1;
   pointer-events: all;
   transform: translate(0, 0);
 }
@@ -132,7 +132,7 @@
 }
 
 .adsk-viewing-viewer .bimwalk .tooltip-info:hover {
-  opacity: 1.0;
+  opacity: 1;
 }
 
 .adsk-viewing-viewer .bimwalk .c-bimwalk-tooltip {
@@ -148,7 +148,7 @@
 }
 
 .adsk-viewing-viewer .bimwalk .c-bimwalk-tooltip--open {
-  opacity: 1.0;
+  opacity: 1;
   pointer-events: all;
 }
 
@@ -176,7 +176,7 @@
 
 .adsk-viewing-viewer .bimwalk .c-bimwalk-tooltip__close {
   position: absolute;
-  top:5px;
+  top: 5px;
   right: -30px;
   cursor: pointer;
 }
@@ -199,7 +199,10 @@
   float: left;
 }
 
-.adsk-viewing-viewer .bimwalk .c-bimwalk-tooltip__tip + .c-bimwalk-tooltip__tip {
+.adsk-viewing-viewer
+  .bimwalk
+  .c-bimwalk-tooltip__tip
+  + .c-bimwalk-tooltip__tip {
   margin-left: 5px;
 }
 
@@ -318,6 +321,9 @@
   width: 240px;
 }
 
-.adsk-viewing-viewer .bimwalk .c-bimwalk-tooltip__action + .c-bimwalk-tooltip__action {
+.adsk-viewing-viewer
+  .bimwalk
+  .c-bimwalk-tooltip__action
+  + .c-bimwalk-tooltip__action {
   margin-left: 1px;
 }

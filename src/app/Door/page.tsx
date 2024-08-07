@@ -17,8 +17,13 @@ import {
 } from "@chakra-ui/react";
 import { FiSearch } from "react-icons/fi";
 import { MemberTable } from "./MemberTable";
+import { TypeQuery } from "../page";
 
-const DoorPage = () => {
+interface Props {
+  typeQuery: TypeQuery;
+}
+
+const DoorPage = ({ typeQuery }: Props) => {
   const isMobile = false; //useBreakpointValue({ base: true, md: false });
   return (
     <Container py={{ base: "4", md: "8" }} px={{ base: "0", md: 8 }}>

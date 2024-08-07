@@ -1,15 +1,13 @@
-import { Pipe, PipeTransform } from '@angular/core';
+import { Pipe, PipeTransform } from "@angular/core";
 
 /**
  * Convert Object to array of keys.
  */
 @Pipe({
-  name: 'objectKeysPipe'
+  name: "objectKeysPipe",
 })
 export class ObjectKeysPipe implements PipeTransform {
-
   transform(value: {}): string[] {
-
     if (!value) {
       return [];
     }

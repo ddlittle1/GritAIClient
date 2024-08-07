@@ -1,3 +1,4 @@
+
 import {
   Heading,
   Table,
@@ -8,9 +9,24 @@ import {
   Th,
   Thead,
   Tr,
+  Button,
+  Container,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
+  useDisclosure,
+  Box,
+  Stack,
+  Tooltip,
 } from "@chakra-ui/react";
 
 import React from "react";
+import { TypeQuery } from "../page";
+import DoorDetailModal from "./DoorDetailModal";
 
 interface Door {
   _id: string;
@@ -27,66 +43,77 @@ interface Door {
   operationType?: string | null;
   doc_Id: string;
   conversionTime: string;
+  docPath: string;
+  docTitle: string;
 }
 
 interface Props {
-  doors: Door[];
+  doorQuery: TypeQuery;
 }
 function getSampleDoors(): Door[] {
   const sampleDoor = [
     {
-      _id: "aae61527-83e5-4f89-b68f-f99ebf5b0912-000e46ff",
-      uniqueId: "aae61527-83e5-4f89-b68f-f99ebf5b0912-000e46ff",
-      familyType: "Curtain Wall Sgl Glass 3'-6x7'",
-      mark: "116",
+      doc_Id: "66a8218f1b39857cfd665fb9",
+      _id: "66a8218f1b39857cfd665fb9",
+      docPath:
+        "G:\\mark@construxiv.com\\Takeout\\Drive\\Construxiv_Projects\\eTakeoff\\STINE - Office Building.rvt",
+      docTitle: "STINE - Office Building",
+      conversionTime: "7/29/2024 6:11:10 PM",
+      uniqueId: "5640d2b0-f533-44ce-b8f8-ff5f9d74cca8-00024e7a",
+      familyType: '36" x 84"',
+      mark: "1",
       finish: "",
       cost: "",
       fireRating: "",
       constructionType: "",
-      thickness: null,
       frameType: null,
       frameMaterial: "",
       operationType: null,
-      doc_Id: "0fc792c6-1004-4298-b38a-b69122a546c1",
-      conversionTime: "7/5/2024 8:17:33 PM",
+      thickness: null,
     },
     {
-      _id: "e07164ea-3f3d-4af3-8ff5-11881079f693-000e95db",
-      uniqueId: "e07164ea-3f3d-4af3-8ff5-11881079f693-000e95db",
+      doc_Id: "66a8218f1b39857cfd665fba",
+      _id: "66a8218f1b39857cfd665fba",
+      docPath:
+        "G:\\mark@construxiv.com\\Takeout\\Drive\\Construxiv_Projects\\eTakeoff\\STINE - Office Building.rvt",
+      docTitle: "STINE - Office Building",
+      conversionTime: "7/29/2024 6:11:10 PM",
+      uniqueId: "5640d2b0-f533-44ce-b8f8-ff5f9d74cca8-00024ea9",
       familyType: '36" x 84"',
-      mark: "117",
+      mark: "2",
       finish: "",
       cost: "",
       fireRating: "",
       constructionType: "",
-      thickness: null,
       frameType: null,
       frameMaterial: "",
       operationType: null,
-      doc_Id: "0fc792c6-1004-4298-b38a-b69122a546c1",
-      conversionTime: "7/5/2024 8:17:33 PM",
+      thickness: null,
     },
   ];
   return sampleDoor;
 }
 
-const DoorTable = async (dors: Props) => {
-  const dors2: Door[] = getSampleDoors();
+const DoorTable = async () => {
+  // const doors: Door[] = getSampleDoors();
   //const { data } = useDoors();
-  // console.log("Doors - data", doors);
+  /// console.log("Doors - data", doors);
   const getDoors = async () => {
     const res = await fetch("http://localhost:8080/api/doors/getall");
     return res.json();
   };
   const doors: Door[] = await getDoors();
+  // console.log('door', doors[0])
+  //console.log('query', typeQuery); console.log('doors')
   return (
     <>
       <Heading fontSize="2xl">Door Elements</Heading>
       <TableContainer>
-        <Table variant="striped">
+        <Table variant="simple">
           <Thead fontSize="2xl">
             <Tr>
               <Th>Type</Th>
+              <Th>Title</Th>
               <Th>Identifier</Th>
               <Th>Document ID</Th>
               <Th>Extraction Time</Th>
@@ -94,12 +121,36 @@ const DoorTable = async (dors: Props) => {
           </Thead>
           <Tbody>
             {doors.map((door: Door) => (
-              <Tr key={door.uniqueId}>
-                <Td>{door.familyType}</Td>
-                <Td>{door.uniqueId}</Td>
-                <Td>{door.doc_Id}</Td>
-                <Td>{door.conversionTime}</Td>
-              </Tr>
+              <>
+                <Tooltip label="Auto start" placement="auto-start">
+                  <Button>Auto-Start</Button>
+
+                  <Tr
+                    data-key={door.uniqueId}
+                    key={door.uniqueId}
+                    className="hover:bg-sky-200"
+                    onClick={(e) => {
+                      const el = e.target as HTMLTableRowElement;
+                      console.log(
+                        "id",
+                        el.parentElement?.dataset?.key,
+                        "text",
+                        el.innerHTML
+                      );
+                    }}
+                  > <Tooltip label='Auto start' id="tt1" placement='auto-start'>
+                      <Button>Auto-Start</Button>
+                    </Tooltip>
+
+                    <Td data-tooltip-content={door.docTitle} data-tooltip-id="tt1">{door.familyType}</Td>
+
+                    <Td>{door.docTitle}</Td>
+                    <Td>{door.mark}</Td>
+                    <Td>{door.doc_Id}</Td>
+                    <Td>{door.conversionTime}</Td>
+                  </Tr>
+                </Tooltip>
+              </>
             ))}
           </Tbody>
         </Table>
